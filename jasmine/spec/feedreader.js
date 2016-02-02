@@ -97,6 +97,18 @@ $(function() {
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
+        beforeEach(function(done) {
+            loadFeed(0, done);
+        });
+
+        it('a single .entry element within the .feed container', function(done) {
+            var feedElem = document.getElementsByClassName("feed");
+            expect(feedElem[0].getElementsByClassName("entry").length).not.toEqual(0);
+            done();
+        });
+
+        // afterEach not needed as loadFeed() empties out previous entries
+        // afterEach();
     })
 
 
