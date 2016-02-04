@@ -119,6 +119,47 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+        var idCounter = 1,
+            headerArray = [];
+
+        beforeEach(function(done) {
+            loadFeed(idCounter, done);
+            idCounter--;
+        });
+
+        it('headers are not null', function(done) {
+            var feedElem = document.getElementsByClassName("feed");
+            var entries = feedElem[0].getElementsByClassName("entry");
+
+            // cannot use forEach() as getElementsByClassName returns HTMLCollenction
+            // object; which is not array but array-like object
+            for (var i = 0; i < entries.length; i++) {
+                var header = entries[i].getElementsByTagName("h2")[0].innerHTML;
+                expect(header).not.toBeNull();
+                headerArray.push(header);
+            };
+
+            done();
+        });
+
+        it('content changes', function(done) {
+            var feedElem = document.getElementsByClassName("feed");
+            var entries = feedElem[0].getElementsByClassName("entry");
+
+            // cannot use forEach() as getElementsByClassName returns HTMLCollenction
+            // object; which is not array but array-like object
+            for (var i = 0; i < entries.length; i++) {
+                var header = entries[i].getElementsByTagName("h2")[0].innerHTML;
+                expect(header).not.toBeNull();
+
+                // check if header present in headerArray
+                for (var j = 0; j < headerArray.length; j++) {
+                    expect(headerArray[j]).not.toBe(header);
+                };
+            };
+
+            done();
+        });
     })
 
 
