@@ -103,7 +103,12 @@ $(function() {
 
         it('a single .entry element within the .feed container', function(done) {
             var feedElem = document.getElementsByClassName("feed");
-            expect(feedElem[0].getElementsByClassName("entry").length).not.toEqual(0);
+            if (feedElem.length > 0) {
+                expect(feedElem[0].getElementsByClassName("entry").length).not.toEqual(0);
+            } else {
+                // fail test if no .feed element present
+                expect(feedElem.length).not.toEqual(0);
+            }
             done();
         });
 
@@ -124,43 +129,55 @@ $(function() {
 
         beforeEach(function(done) {
             loadFeed(idCounter, done);
-            idCounter--;
+
+            if (idCounter > 0) {
+                idCounter--;
+            };
         });
 
-        it('headers are not null', function(done) {
+        it('the headers are not null', function(done) {
             var feedElem = document.getElementsByClassName("feed");
-            var entries = feedElem[0].getElementsByClassName("entry");
 
-            // cannot use forEach() as getElementsByClassName returns HTMLCollenction
-            // object; which is not array but array-like object
-            for (var i = 0; i < entries.length; i++) {
-                var header = entries[i].getElementsByTagName("h2")[0].innerHTML;
-                expect(header).not.toBeNull();
-                headerArray.push(header);
-            };
+            if (feedElem.length > 0) {
+                var entries = feedElem[0].getElementsByClassName("entry");
+
+                // cannot use forEach() as getElementsByClassName returns HTMLCollenction
+                // object; which is not array but array-like object
+                for (var i = 0; i < entries.length; i++) {
+                    var header = entries[i].getElementsByTagName("h2")[0].innerHTML;
+                    expect(header).not.toBeNull();
+                    headerArray.push(header);
+                };
+            } else {
+                // fail test if no .feed element present
+                expect(feedElem.length).not.toEqual(0);
+            }
 
             done();
         });
 
-        it('content changes', function(done) {
+        it('the content changes', function(done) {
             var feedElem = document.getElementsByClassName("feed");
-            var entries = feedElem[0].getElementsByClassName("entry");
 
-            // cannot use forEach() as getElementsByClassName returns HTMLCollenction
-            // object; which is not array but array-like object
-            for (var i = 0; i < entries.length; i++) {
-                var header = entries[i].getElementsByTagName("h2")[0].innerHTML;
-                expect(header).not.toBeNull();
+            if (feedElem.length > 0) {
+                var entries = feedElem[0].getElementsByClassName("entry");
 
-                // check if header present in headerArray
-                for (var j = 0; j < headerArray.length; j++) {
-                    expect(headerArray[j]).not.toBe(header);
+                // cannot use forEach() as getElementsByClassName returns HTMLCollenction
+                // object; which is not array but array-like object
+                for (var i = 0; i < entries.length; i++) {
+                    var header = entries[i].getElementsByTagName("h2")[0].innerHTML;
+                    expect(header).not.toBeNull();
+
+                    // check if header present in headerArray
+                    expect(headerArray).not.toContain(header);
                 };
-            };
+            } else {
+                // fail test if no .feed element present
+                expect(feedElem.length).not.toEqual(0);
+            }
 
             done();
         });
     })
-
 
 }());
