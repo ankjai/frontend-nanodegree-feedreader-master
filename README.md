@@ -17,3 +17,6 @@ After it starts, you can navigate to http://0.0.0.0:8000/index.html
 
 
 #### The Feed Reader App
+This is a web based application that reads RSS feeds.
+
+![](https://cloud.githubusercontent.com/assets/6732675/12854800/8287eb52-cbf0-11e5-9d20-e79521c8fa29.gif)
