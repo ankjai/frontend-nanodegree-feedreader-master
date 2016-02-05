@@ -24,4 +24,17 @@ This is a web based application that reads RSS feeds.
 
 #### Jasmine Testing Framework
 
+###### Test Execution
+Tests are executed when user navigate to http://0.0.0.0:8000/index.html. The tests are run before the app is loaded for user to use.
+
 ###### Test Results
+The results are at the bottom of the page
+
+![](https://cloud.githubusercontent.com/assets/6732675/12854929/5b5e18e8-cbf1-11e5-8b77-1acf82f45c8a.png)
+
+In case of test failures, the report at the bottom of app page will list out failures
+
+![](https://cloud.githubusercontent.com/assets/6732675/12855061/2c1e3abc-cbf2-11e5-99cd-abfdd7d99dd2.gif)
+
+###### Test Coverage
+The test cases covered are defined in `frontend-nanodegree-feedreader-master/jasmine/spec/feedreader.js`
