@@ -22,7 +22,9 @@ $(function() {
          * page?
          */
         it('are defined', function() {
+            // feed is not undefined
             expect(allFeeds).toBeDefined();
+            // feed array is not empty
             expect(allFeeds.length).not.toBe(0);
         });
 
@@ -33,8 +35,11 @@ $(function() {
          */
         it('have URL defined', function() {
             allFeeds.forEach(function(element, index, array) {
+                // feed url is nor undefined
                 expect(element.url).toBeDefined();
+                // url contains http
                 expect(element.url).toMatch("http");
+                // and url is not null
                 expect(element.url).not.toBeNull();
             });
         });
@@ -46,7 +51,9 @@ $(function() {
          */
         it('have name defined', function() {
             allFeeds.forEach(function(element, index, array) {
+                // feed name is not undefined
                 expect(element.name).toBeDefined();
+                // name is not null
                 expect(element.name).not.toBeNull();
             });
         });
@@ -64,7 +71,9 @@ $(function() {
             var menuElem = document.getElementsByTagName("body");
             // error handling for undefined variables and out-of-bound array access
             try {
+                // menu elem has class as an attr
                 expect(menuElem[0].hasAttribute("class")).toBe(true);
+                // and class attr has menu-hidden as value
                 expect(menuElem[0].getAttribute("class")).toBe("menu-hidden");
             } catch (e) {
                 console.error(e);
@@ -81,14 +90,24 @@ $(function() {
 
             // error handling for undefined variables and out-of-bound array access
             try {
+                // click the menu icon
                 menuIconLinkElem[0].click();
+
                 var menuClickedElem = document.getElementsByTagName("body");
+                // verify the class attr is present
                 expect(menuClickedElem[0].hasAttribute("class")).toBe(true);
+                // verify class attr is empty
+                // this means menu is displayed
                 expect(menuClickedElem[0].getAttribute("class")).toBe("");
 
+                // click the menu icon
                 menuIconLinkElem[0].click();
+
                 menuClickedElem = document.getElementsByTagName("body");
+                // verify the class attr is present
                 expect(menuClickedElem[0].hasAttribute("class")).toBe(true);
+                // verify class attr is .menu-hidden
+                // this means menu is hidden
                 expect(menuClickedElem[0].getAttribute("class")).toBe("menu-hidden");
             } catch (e) {
                 console.error(e);
@@ -113,6 +132,7 @@ $(function() {
         it('a single .entry element within the .feed container', function(done) {
             var feedElem = document.getElementsByClassName("feed");
             try {
+                // verify .entry present in .feed container
                 expect(feedElem[0].getElementsByClassName("entry").length).not.toEqual(0);
             } catch (e) {
                 console.error(e);
@@ -153,7 +173,9 @@ $(function() {
                 // object; which is not array but array-like object
                 for (var i = 0; i < entries.length; i++) {
                     var header = entries[i].getElementsByTagName("h2")[0].innerHTML;
+                    // verify header is not null
                     expect(header).not.toBeNull();
+                    // push header into the array 
                     headerArray.push(header);
                 };
             } catch (e) {
@@ -174,7 +196,8 @@ $(function() {
                     var header = entries[i].getElementsByTagName("h2")[0].innerHTML;
                     expect(header).not.toBeNull();
 
-                    // check if header present in headerArray
+                    // check if header not present in headerArray
+                    // as different feed was loaded by loadFeed()
                     expect(headerArray).not.toContain(header);
                 };
             } catch (e) {
