@@ -62,8 +62,13 @@ $(function() {
          */
         it('is hidden by default', function() {
             var menuElem = document.getElementsByTagName("body");
-            expect(menuElem[0].hasAttribute("class")).toBe(true);
-            expect(menuElem[0].getAttribute("class")).toBe("menu-hidden");
+            // error handling for undefined variables and out-of-bound array access
+            try {
+                expect(menuElem[0].hasAttribute("class")).toBe(true);
+                expect(menuElem[0].getAttribute("class")).toBe("menu-hidden");
+            } catch (e) {
+                console.error(e);
+            }
         });
 
         /* TODO: Write a test that ensures the menu changes
@@ -74,17 +79,21 @@ $(function() {
         it('is displayed when clicked', function() {
             var menuIconLinkElem = document.getElementsByClassName("menu-icon-link");
 
-            menuIconLinkElem[0].click();
-            var menuClickedElem = document.getElementsByTagName("body");
-            expect(menuClickedElem[0].hasAttribute("class")).toBe(true);
-            expect(menuClickedElem[0].getAttribute("class")).toBe("");
+            // error handling for undefined variables and out-of-bound array access
+            try {
+                menuIconLinkElem[0].click();
+                var menuClickedElem = document.getElementsByTagName("body");
+                expect(menuClickedElem[0].hasAttribute("class")).toBe(true);
+                expect(menuClickedElem[0].getAttribute("class")).toBe("");
 
-            menuIconLinkElem[0].click();
-            menuClickedElem = document.getElementsByTagName("body");
-            expect(menuClickedElem[0].hasAttribute("class")).toBe(true);
-            expect(menuClickedElem[0].getAttribute("class")).toBe("menu-hidden");
+                menuIconLinkElem[0].click();
+                menuClickedElem = document.getElementsByTagName("body");
+                expect(menuClickedElem[0].hasAttribute("class")).toBe(true);
+                expect(menuClickedElem[0].getAttribute("class")).toBe("menu-hidden");
+            } catch (e) {
+                console.error(e);
+            }
         });
-
     })
 
 
@@ -97,6 +106,23 @@ $(function() {
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
+        beforeEach(function(done) {
+            loadFeed(0, done);
+        });
+
+        it('a single .entry element within the .feed container', function(done) {
+            var feedElem = document.getElementsByClassName("feed");
+            try {
+                expect(feedElem[0].getElementsByClassName("entry").length).not.toEqual(0);
+            } catch (e) {
+                console.error(e);
+            } finally {
+                done();
+            }
+        });
+
+        // afterEach not needed as loadFeed() empties out previous entries
+        // afterEach();
     })
 
 
@@ -107,7 +133,56 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
-    })
+        var idCounter = 1,
+            headerArray = [];
 
+        beforeEach(function(done) {
+            loadFeed(idCounter, done);
+
+            if (idCounter > 0) {
+                idCounter--;
+            };
+        });
+
+        it('the headers are not null', function(done) {
+            var feedElem = document.getElementsByClassName("feed");
+            try {
+                var entries = feedElem[0].getElementsByClassName("entry");
+
+                // cannot use forEach() as getElementsByClassName returns HTMLCollenction
+                // object; which is not array but array-like object
+                for (var i = 0; i < entries.length; i++) {
+                    var header = entries[i].getElementsByTagName("h2")[0].innerHTML;
+                    expect(header).not.toBeNull();
+                    headerArray.push(header);
+                };
+            } catch (e) {
+                console.error(e);
+            } finally {
+                done();
+            }
+        });
+
+        it('the content changes', function(done) {
+            var feedElem = document.getElementsByClassName("feed");
+            try {
+                var entries = feedElem[0].getElementsByClassName("entry");
+
+                // cannot use forEach() as getElementsByClassName returns HTMLCollenction
+                // object; which is not array but array-like object
+                for (var i = 0; i < entries.length; i++) {
+                    var header = entries[i].getElementsByTagName("h2")[0].innerHTML;
+                    expect(header).not.toBeNull();
+
+                    // check if header present in headerArray
+                    expect(headerArray).not.toContain(header);
+                };
+            } catch (e) {
+                console.error(e);
+            } finally {
+                done();
+            }
+        });
+    })
 
 }());
