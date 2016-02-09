@@ -95,8 +95,6 @@ $(function() {
             // verify class attr is does not has menu-hidden as one of its class
             // this means menu is displayed
             expect(menuClickedElem[0].getAttribute("class")).not.toMatch("menu-hidden");
-            // menu is falsy if menu is visible
-            expect(menuClickedElem[0].getAttribute("class")).toBeFalsy();
 
             // click the menu icon
             menuIconLinkElem[0].click();
