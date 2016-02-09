@@ -73,8 +73,10 @@ $(function() {
             try {
                 // menu elem has class as an attr
                 expect(menuElem[0].hasAttribute("class")).toBe(true);
-                // and class attr has menu-hidden as value
-                expect(menuElem[0].getAttribute("class")).toBe("menu-hidden");
+                // and class attr has menu-hidden as one of its class
+                expect(menuElem[0].getAttribute("class")).toMatch("menu-hidden");
+                // truthy if menu is hidden
+                expect(menuElem[0].getAttribute("class")).toBeTruthy();
             } catch (e) {
                 console.error(e);
             }
@@ -96,9 +98,11 @@ $(function() {
                 var menuClickedElem = document.getElementsByTagName("body");
                 // verify the class attr is present
                 expect(menuClickedElem[0].hasAttribute("class")).toBe(true);
-                // verify class attr is empty
+                // verify class attr is does not has menu-hidden as one of its class
                 // this means menu is displayed
-                expect(menuClickedElem[0].getAttribute("class")).toBe("");
+                expect(menuClickedElem[0].getAttribute("class")).not.toMatch("menu-hidden");
+                // menu is falsy if menu is visible
+                expect(menuClickedElem[0].getAttribute("class")).toBeFalsy();
 
                 // click the menu icon
                 menuIconLinkElem[0].click();
@@ -106,9 +110,11 @@ $(function() {
                 menuClickedElem = document.getElementsByTagName("body");
                 // verify the class attr is present
                 expect(menuClickedElem[0].hasAttribute("class")).toBe(true);
-                // verify class attr is .menu-hidden
+                // verify class attr has .menu-hidden
                 // this means menu is hidden
-                expect(menuClickedElem[0].getAttribute("class")).toBe("menu-hidden");
+                expect(menuClickedElem[0].getAttribute("class")).toMatch("menu-hidden");
+                // menu is truthy if menu is hidden
+                expect(menuClickedElem[0].getAttribute("class")).toBeTruthy();
             } catch (e) {
                 console.error(e);
             }
