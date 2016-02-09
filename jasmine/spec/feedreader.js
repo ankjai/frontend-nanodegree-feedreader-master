@@ -113,7 +113,7 @@ $(function() {
                 console.error(e);
             }
         });
-    })
+    });
 
 
 
@@ -143,7 +143,7 @@ $(function() {
 
         // afterEach not needed as loadFeed() empties out previous entries
         // afterEach();
-    })
+    });
 
 
 
@@ -161,7 +161,7 @@ $(function() {
 
             if (idCounter > 0) {
                 idCounter--;
-            };
+            }
         });
 
         it('the headers are not null', function(done) {
@@ -177,7 +177,7 @@ $(function() {
                     expect(header).not.toBeNull();
                     // push header into the array 
                     headerArray.push(header);
-                };
+                }
             } catch (e) {
                 console.error(e);
             } finally {
@@ -199,13 +199,13 @@ $(function() {
                     // check if header not present in headerArray
                     // as different feed was loaded by loadFeed()
                     expect(headerArray).not.toContain(header);
-                };
+                }
             } catch (e) {
                 console.error(e);
             } finally {
                 done();
             }
         });
-    })
+    });
 
 }());
