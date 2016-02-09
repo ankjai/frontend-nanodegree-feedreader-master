@@ -69,17 +69,13 @@ $(function() {
          */
         it('is hidden by default', function() {
             var menuElem = document.getElementsByTagName("body");
-            // error handling for undefined variables and out-of-bound array access
-            try {
-                // menu elem has class as an attr
-                expect(menuElem[0].hasAttribute("class")).toBe(true);
-                // and class attr has menu-hidden as one of its class
-                expect(menuElem[0].getAttribute("class")).toMatch("menu-hidden");
-                // truthy if menu is hidden
-                expect(menuElem[0].getAttribute("class")).toBeTruthy();
-            } catch (e) {
-                console.error(e);
-            }
+
+            // menu elem has class as an attr
+            expect(menuElem[0].hasAttribute("class")).toBe(true);
+            // and class attr has menu-hidden as one of its class
+            expect(menuElem[0].getAttribute("class")).toMatch("menu-hidden");
+            // truthy if menu is hidden
+            expect(menuElem[0].getAttribute("class")).toBeTruthy();
         });
 
         /* Write a test that ensures the menu changes
@@ -90,34 +86,29 @@ $(function() {
         it('is displayed when clicked', function() {
             var menuIconLinkElem = document.getElementsByClassName("menu-icon-link");
 
-            // error handling for undefined variables and out-of-bound array access
-            try {
-                // click the menu icon
-                menuIconLinkElem[0].click();
+            // click the menu icon
+            menuIconLinkElem[0].click();
 
-                var menuClickedElem = document.getElementsByTagName("body");
-                // verify the class attr is present
-                expect(menuClickedElem[0].hasAttribute("class")).toBe(true);
-                // verify class attr is does not has menu-hidden as one of its class
-                // this means menu is displayed
-                expect(menuClickedElem[0].getAttribute("class")).not.toMatch("menu-hidden");
-                // menu is falsy if menu is visible
-                expect(menuClickedElem[0].getAttribute("class")).toBeFalsy();
+            var menuClickedElem = document.getElementsByTagName("body");
+            // verify the class attr is present
+            expect(menuClickedElem[0].hasAttribute("class")).toBe(true);
+            // verify class attr is does not has menu-hidden as one of its class
+            // this means menu is displayed
+            expect(menuClickedElem[0].getAttribute("class")).not.toMatch("menu-hidden");
+            // menu is falsy if menu is visible
+            expect(menuClickedElem[0].getAttribute("class")).toBeFalsy();
 
-                // click the menu icon
-                menuIconLinkElem[0].click();
+            // click the menu icon
+            menuIconLinkElem[0].click();
 
-                menuClickedElem = document.getElementsByTagName("body");
-                // verify the class attr is present
-                expect(menuClickedElem[0].hasAttribute("class")).toBe(true);
-                // verify class attr has .menu-hidden
-                // this means menu is hidden
-                expect(menuClickedElem[0].getAttribute("class")).toMatch("menu-hidden");
-                // menu is truthy if menu is hidden
-                expect(menuClickedElem[0].getAttribute("class")).toBeTruthy();
-            } catch (e) {
-                console.error(e);
-            }
+            menuClickedElem = document.getElementsByTagName("body");
+            // verify the class attr is present
+            expect(menuClickedElem[0].hasAttribute("class")).toBe(true);
+            // verify class attr has .menu-hidden
+            // this means menu is hidden
+            expect(menuClickedElem[0].getAttribute("class")).toMatch("menu-hidden");
+            // menu is truthy if menu is hidden
+            expect(menuClickedElem[0].getAttribute("class")).toBeTruthy();
         });
     });
 
@@ -137,14 +128,11 @@ $(function() {
 
         it('a single .entry element within the .feed container', function(done) {
             var feedElem = document.getElementsByClassName("feed");
-            try {
-                // verify .entry present in .feed container
-                expect(feedElem[0].getElementsByClassName("entry").length).not.toEqual(0);
-            } catch (e) {
-                console.error(e);
-            } finally {
-                done();
-            }
+
+            // verify .entry present in .feed container
+            expect(feedElem[0].getElementsByClassName("entry").length).not.toEqual(0);
+
+            done();
         });
 
         // afterEach not needed as loadFeed() empties out previous entries
@@ -172,45 +160,39 @@ $(function() {
 
         it('the headers are not null', function(done) {
             var feedElem = document.getElementsByClassName("feed");
-            try {
-                var entries = feedElem[0].getElementsByClassName("entry");
 
-                // cannot use forEach() as getElementsByClassName returns HTMLCollenction
-                // object; which is not array but array-like object
-                for (var i = 0; i < entries.length; i++) {
-                    var header = entries[i].getElementsByTagName("h2")[0].innerHTML;
-                    // verify header is not null
-                    expect(header).not.toBeNull();
-                    // push header into the array 
-                    headerArray.push(header);
-                }
-            } catch (e) {
-                console.error(e);
-            } finally {
-                done();
+            var entries = feedElem[0].getElementsByClassName("entry");
+
+            // cannot use forEach() as getElementsByClassName returns HTMLCollenction
+            // object; which is not array but array-like object
+            for (var i = 0; i < entries.length; i++) {
+                var header = entries[i].getElementsByTagName("h2")[0].innerHTML;
+                // verify header is not null
+                expect(header).not.toBeNull();
+                // push header into the array 
+                headerArray.push(header);
             }
+
+            done();
         });
 
         it('the content changes', function(done) {
             var feedElem = document.getElementsByClassName("feed");
-            try {
-                var entries = feedElem[0].getElementsByClassName("entry");
 
-                // cannot use forEach() as getElementsByClassName returns HTMLCollenction
-                // object; which is not array but array-like object
-                for (var i = 0; i < entries.length; i++) {
-                    var header = entries[i].getElementsByTagName("h2")[0].innerHTML;
-                    expect(header).not.toBeNull();
+            var entries = feedElem[0].getElementsByClassName("entry");
 
-                    // check if header not present in headerArray
-                    // as different feed was loaded by loadFeed()
-                    expect(headerArray).not.toContain(header);
-                }
-            } catch (e) {
-                console.error(e);
-            } finally {
-                done();
+            // cannot use forEach() as getElementsByClassName returns HTMLCollenction
+            // object; which is not array but array-like object
+            for (var i = 0; i < entries.length; i++) {
+                var header = entries[i].getElementsByTagName("h2")[0].innerHTML;
+                expect(header).not.toBeNull();
+
+                // check if header not present in headerArray
+                // as different feed was loaded by loadFeed()
+                expect(headerArray).not.toContain(header);
             }
+
+            done();
         });
     });
 
