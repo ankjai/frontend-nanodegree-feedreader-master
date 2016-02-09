@@ -37,10 +37,10 @@ $(function() {
             allFeeds.forEach(function(element, index, array) {
                 // feed url is nor undefined
                 expect(element.url).toBeDefined();
+                // url is non-empty
+                expect(element.url.length).not.toBe(0);
                 // url contains http
                 expect(element.url).toMatch("http");
-                // and url is not null
-                expect(element.url).not.toBeNull();
             });
         });
 
@@ -53,8 +53,8 @@ $(function() {
             allFeeds.forEach(function(element, index, array) {
                 // feed name is not undefined
                 expect(element.name).toBeDefined();
-                // name is not null
-                expect(element.name).not.toBeNull();
+                // name length is not 0
+                expect(element.name.length).not.toBe(0);
             });
         });
     });
