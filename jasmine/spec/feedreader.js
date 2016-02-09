@@ -121,6 +121,9 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
         beforeEach(function(done) {
+            // passing done() as a callback func to loadFeed()
+            // after done() is called on loadFeed(), it is passed to
+            // it()`s anonymous func
             loadFeed(0, done);
         });
 
@@ -130,6 +133,9 @@ $(function() {
             // verify .entry present in .feed container
             expect(feedElem[0].getElementsByClassName("entry").length).not.toEqual(0);
 
+            // spec will not complete until its done is called
+            // if not called within 5 sec(timeout), test will fail
+            // w/ jasmine.DEFAULT_TIMEOUT_INTERVAL
             done();
         });
 
@@ -149,9 +155,14 @@ $(function() {
             headerArray = [];
 
         beforeEach(function(done) {
+            // passing done() as a callback func to loadFeed()
+            // after done() is called on loadFeed(), it is passed to
+            // it()`s anonymous func
+            // this is called twice before each it() w/ different idCounter (1 and 0)
             loadFeed(idCounter, done);
 
             if (idCounter > 0) {
+                // change counter to load different feed using loadFeed()
                 idCounter--;
             }
         });
@@ -171,6 +182,11 @@ $(function() {
                 headerArray.push(header);
             }
 
+            // spec will not complete until its done is called
+            // if not called within 5 sec(timeout), test will fail
+            // w/ jasmine.DEFAULT_TIMEOUT_INTERVAL
+            // this done is now passed to beforeEach() anonymous func.
+            // to synchronize between tests
             done();
         });
 
@@ -190,6 +206,9 @@ $(function() {
                 expect(headerArray).not.toContain(header);
             }
 
+            // spec will not complete until its done is called
+            // if not called within 5 sec(timeout), test will fail
+            // w/ jasmine.DEFAULT_TIMEOUT_INTERVAL
             done();
         });
     });
